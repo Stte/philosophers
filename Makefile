@@ -1,16 +1,15 @@
-NAME = push_swap
+NAME = philosophers
 
-LIB_DIR = libft
-SRC_DIR = src
-VPATH = src:libft
+SRC_DIR = philo
+VPATH = philo
 
 OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:.c=.o))
 OBJ_DIR = obj
 
-INCLUDES = -Ilibft/includes -Iincludes
-CFLAGS = -Wall -Wextra -Werror -MMD
+INCLUDES = -Iincludes
+CFLAGS = -Wall -Wextra -Werror -MMD -g
 
-SRC = main.c
+SRC = main.c errors.c philo_utils.c
 
 DEP = $(OBJ:.o=.d)
 
@@ -18,21 +17,18 @@ DEP = $(OBJ:.o=.d)
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	@make -C $(LIB_DIR)
-	@cc $(CFLAGS) $(OBJ) -o $(NAME) -L$(LIB_DIR) -lft
+	cc $(CFLAGS) $(OBJ) -o $(NAME)
 
 $(OBJ_DIR)/%.o: %.c
-	@mkdir -p $(OBJ_DIR)
-	@cc $(CFLAGS) $(INCLUDES) -c $< -o $@
+	mkdir -p $(OBJ_DIR)
+	cc $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 -include $(DEP)
 
 clean:
-	@make clean -C $(LIB_DIR)
-	@rm -rf $(OBJ_DIR)
+	rm -rf $(OBJ_DIR)
 
 fclean: clean
-	@make fclean -C $(LIB_DIR)
-	@rm -rf $(OBJ_DIR)
-	@rm -f $(NAME)
+	rm -rf $(OBJ_DIR)
+	rm -f $(NAME)
 re: fclean all

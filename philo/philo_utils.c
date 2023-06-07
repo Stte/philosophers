@@ -1,16 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   philo_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rrask <rrask@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/09 11:32:50 by rrask             #+#    #+#             */
-/*   Updated: 2022/12/14 17:19:12 by rrask            ###   ########.fr       */
+/*   Created: 2023/06/07 15:15:18 by rrask             #+#    #+#             */
+/*   Updated: 2023/06/07 15:35:38 by rrask            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+# include "philosophers.h"
+# include <ctype.h>
 
 int	ft_atoi(const char *str)
 {
@@ -27,7 +28,7 @@ int	ft_atoi(const char *str)
 			sign = -1;
 		str++;
 	}
-	while (ft_isdigit(*str))
+	while (isdigit(*str)) // CHANGE TO FT_ISDIGIT AND REMOVE CTYPE LIB
 	{
 		res = res * 10 + *str - '0';
 		if (res * sign > RAS_MAX)
