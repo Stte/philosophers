@@ -6,7 +6,7 @@
 /*   By: rrask <rrask@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 09:51:23 by rrask             #+#    #+#             */
-/*   Updated: 2023/06/09 11:20:39 by rrask            ###   ########.fr       */
+/*   Updated: 2023/06/09 11:35:41 by rrask            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,10 +56,12 @@ void	create_threads(void)
 void	philo_init(t_philo (*philos)[10])
 {
 	int i = 0;
+	pthread_mutex_t *test;
 
 	while (i < 10)
 	{
-		if (pthread_mutex_init(&(philos[i]->left), NULL) != 0)
+		test = &philos[i]->left;
+		if (pthread_mutex_init(test, NULL) != 0)
 			error_handler("No philosophers here.");	
 		i++;
 	}
