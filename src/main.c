@@ -3,16 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rrask <rrask@student.42.fr>                +#+  +:+       +#+        */
+/*   By: junheepoofi <junheepoofi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 09:51:23 by rrask             #+#    #+#             */
-/*   Updated: 2023/06/12 15:36:30 by rrask            ###   ########.fr       */
+/*   Updated: 2023/06/12 16:28:02 by junheepoofi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
 int counter = 0;
+
+void	attr_set(t_attr *attrib, int argc, char **argv)
+{
+	attrib->philo_num = ft_atoi(argv[1]);
+	attrib->time_to_die = ft_atoi(argv[2]);
+	attrib->time_to_eat =  ft_atoi(argv[3]);
+	attrib->time_to_sleep =  ft_atoi(argv[4]);
+	if (argc == ARG_MAX)
+		attrib->eat_amount =  ft_atoi(argv[5]);
+	attrib->eat_amount = -1;
+}
 
 void *thread_func(void *this)
 {
@@ -31,7 +42,7 @@ void *thread_func(void *this)
 	return (this);
 }
 
-void	create_threads(void)
+void	philo_spawn(void)
 {
 	int i = 0;
 	
@@ -53,62 +64,41 @@ void	create_threads(void)
 	}
 }
 
-pthread_mutex_t	*forks_init(int num_philos)
-{
-	int i;
-	pthread_mutex_t *forks;
-
-	forks = malloc(sizeof(pthread_mutex_t) * num_philos);
-	if (!forks)
-		return(NULL);
-	i = 0;
-	while (i < num_philos)
-	{
-		if (pthread_mutex_init(forks + i, NULL) != 0)
-			error_handler("No philosophers here.");
-		i++;
-	}
-	return (forks);
-}
-
-void	forks_destroy(int num_philos, pthread_mutex_t *forks)
+void	philos_init(t_philo *philos, t_attr *attrib, pthread_mutex_t *forks)
 {
 	int i;
 
 	i = 0;
-	while (i < num_philos)
+	while (i < attrib->philo_num)
 	{
-		if (pthread_mutex_destroy(forks + i) != 0)
-			error_handler("Mutex is too powerful, we have failed in vanquishing it...");
+		philos[i].attributes = attrib;
+		philos[i].l_fork = &forks[i];
+		if (i == attrib->philo_num - 1)
+			philos[i].r_fork = &forks[0];
+		else
+			philos[i].r_fork = &forks[i + 1];
 		i++;
 	}
 }
-
-void	set_args(t_attr *attrib, char **argv)
-{
-	attrib->philo_num = argv[1];
-	attrib->time_to_die = argv[2];
-	attrib->time_to_eat = argv[3];
-	attrib->time_to_sleep = argv[4];
-	attrib->eat_amount = argv[5];
-}
-
-
 
 int main (int argc, char **argv)
 {
-	pthread_mutex_t	*forks;
 	t_attr			attributes;
-	
-	if (argc < 5 || argc > 6)
-		return (0);
-	set_args(&attributes, argv);
-	// philo_init(&philos);
-	forks = forks_init(attributes.philo_num);
-	create_threads();
-	forks_destroy(attributes.philo_num, forks);
-	free(forks);
-	return (0); 
+	pthread_mutex_t	forks[MAX_PHILO];
+	t_philo			philos[MAX_PHILO];
 
+	if (argc < ARG_MIN || argc > ARG_MAX)
+	{
+		printf("lol");
+		return (0);
+	}
+	printf("life's good");
+	attr_set(&attributes, argc, argv);
+	forks_init(attributes.philo_num, forks);
+	philos_init(philos, &attributes, forks);
+	// philo_spawn();
+	forks_destroy(attributes.philo_num, forks);
+	return (0); 
+}
 // where do we create the t_philos? A: After/before fork
 // Each philo needs attrib

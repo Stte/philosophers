@@ -1,15 +1,15 @@
-NAME = philosophers
+NAME = philo
 
-SRC_DIR = philo
-VPATH = philo
+SRC_DIR = ./src
+VPATH = src:inc
 
 OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:.c=.o))
 OBJ_DIR = obj
 
-INCLUDES = -Iincludes
+INCLUDES = -Iinc
 CFLAGS = -Wall -Wextra -Werror -MMD -g
 
-SRC = main.c errors.c philo_utils.c
+SRC = main.c forks.c errors.c utils.c
 
 DEP = $(OBJ:.o=.d)
 

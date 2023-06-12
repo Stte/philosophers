@@ -1,9 +1,10 @@
 #ifndef PHILOSOPHERS_H
 # define PHILOSOPHERS_H
-# define ARG_MIN 4
+# define ARG_MIN 5
+# define ARG_MAX 6
 # define RAS_MAX 2147483647
 # define RAS_MIN -2147483648
-# define PHILO_NUM 200
+# define MAX_PHILO 250
 # include <pthread.h>
 # include <stdio.h>
 # include <stdlib.h>
@@ -42,5 +43,8 @@ int		ft_isdigit(int c);
 void	error_handler(char *str);
 
 /*Philo main components*/
+void	philos_init(t_philo *philos, t_attr *attrib, pthread_mutex_t *forks);
+void	forks_init(int num_philos, pthread_mutex_t	*forks);
+void	forks_destroy(int num_philos, pthread_mutex_t *forks);
 
 #endif

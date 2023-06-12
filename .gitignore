@@ -28,7 +28,7 @@
 *.so.*
 *.dylib
 .DS_Store
-.gitignore
+.vscode/
 
 # Executables
 *.exe
