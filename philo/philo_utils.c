@@ -6,12 +6,11 @@
 /*   By: rrask <rrask@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 15:15:18 by rrask             #+#    #+#             */
-/*   Updated: 2023/06/08 10:01:51 by rrask            ###   ########.fr       */
+/*   Updated: 2023/06/12 13:36:22 by rrask            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "philosophers.h"
-# include <ctype.h>
 
 int	ft_isdigit(int c)
 {

@@ -27,6 +27,8 @@
 *.so
 *.so.*
 *.dylib
+.DS_Store
+.gitignore
 
 # Executables
 *.exe
