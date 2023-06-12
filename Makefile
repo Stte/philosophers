@@ -9,7 +9,7 @@ OBJ_DIR = obj
 INCLUDES = -Iinc
 CFLAGS = -Wall -Wextra -Werror -MMD -g
 
-SRC = main.c forks.c errors.c utils.c
+SRC = main.c forks.c errors.c utils.c philos.c
 
 DEP = $(OBJ:.o=.d)
 

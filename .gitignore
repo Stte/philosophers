@@ -27,8 +27,6 @@
 *.so
 *.so.*
 *.dylib
-.DS_Store
-.vscode/
 
 # Executables
 *.exe
@@ -52,3 +50,8 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+
+#own stuff
+philo
+.DS_Store
+.vscode/
