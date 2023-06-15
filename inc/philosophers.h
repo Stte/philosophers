@@ -6,7 +6,7 @@
 /*   By: rrask <rrask@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 19:09:50 by rrask             #+#    #+#             */
-/*   Updated: 2023/06/12 19:09:53 by rrask            ###   ########.fr       */
+/*   Updated: 2023/06/15 15:55:48 by rrask            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,25 +22,28 @@
 # include <stdlib.h>
 # include <ctype.h> // isdigit
 # include <unistd.h>
+# include <sys/time.h>
 
 pthread_mutex_t my_mutex;
 
 typedef struct s_attr
 {
-	int	philo_num;
-	int	time_to_die;
-	int	time_to_eat;
-	int	time_to_sleep;
-	int	eat_amount;
+	size_t	start_time;
+	int		philo_num;
+	int		time_to_die;
+	int		time_to_eat;
+	int		time_to_sleep;
+	int		eat_amount;
 }					t_attr;
 
 typedef struct s_philo
 {
+	unsigned int	id;
 	pthread_t		thread;
-	pthread_mutex_t *r_fork;
-	pthread_mutex_t *l_fork;
-	int				is_dead;
-	int				test;
+	pthread_mutex_t	*r_fork;
+	pthread_mutex_t	*l_fork;
+	pthread_mutex_t	*gate;
+	size_t			last_supper;
 	t_attr			*attributes;
 }					t_philo;
 
