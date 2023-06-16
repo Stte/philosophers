@@ -6,7 +6,7 @@
 /*   By: rrask <rrask@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 19:09:50 by rrask             #+#    #+#             */
-/*   Updated: 2023/06/16 14:18:35 by rrask            ###   ########.fr       */
+/*   Updated: 2023/06/16 16:39:36 by rrask            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,17 +28,19 @@ pthread_mutex_t my_mutex;
 
 typedef struct s_attr
 {
-	size_t	start_time;
-	int		philo_num;
+	size_t		start_time;
+	int			philo_num;
 	size_t		time_to_die;
 	size_t		time_to_eat;
 	size_t		time_to_sleep;
-	size_t		eat_amount;
+	int			times_must_eat;
 }					t_attr;
 
 typedef struct s_philo
 {
 	unsigned int	id;
+	int				is_dead;
+	int				times_eaten;
 	pthread_t		thread;
 	pthread_mutex_t	*r_fork;
 	pthread_mutex_t	*l_fork;
@@ -69,6 +71,9 @@ void	governor(t_philo *philos, t_attr *attr, pthread_mutex_t	*forks);
 void	print_state(size_t start_time, int philo_num, char *string);
 int		hit_the_hay(size_t	sleepytime);
 int		is_dead(size_t last_supper, size_t time_to_die);
+void	eating(t_philo *philo, size_t time_to_eat);
+void	sleeping(t_attr philo, size_t time_to_sleep);
+void	thinking(t_attr philo);
 size_t	get_time_ms(void);
 
 /*utils.c*/
