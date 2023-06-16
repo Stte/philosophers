@@ -6,7 +6,7 @@
 /*   By: rrask <rrask@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 19:09:50 by rrask             #+#    #+#             */
-/*   Updated: 2023/06/15 15:55:48 by rrask            ###   ########.fr       */
+/*   Updated: 2023/06/16 14:18:35 by rrask            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,10 @@ typedef struct s_attr
 {
 	size_t	start_time;
 	int		philo_num;
-	int		time_to_die;
-	int		time_to_eat;
-	int		time_to_sleep;
-	int		eat_amount;
+	size_t		time_to_die;
+	size_t		time_to_eat;
+	size_t		time_to_sleep;
+	size_t		eat_amount;
 }					t_attr;
 
 typedef struct s_philo
@@ -44,8 +44,15 @@ typedef struct s_philo
 	pthread_mutex_t	*l_fork;
 	pthread_mutex_t	*gate;
 	size_t			last_supper;
-	t_attr			*attributes;
+	t_attr			*attr;
 }					t_philo;
+
+typedef struct s_mutex
+{
+	pthread_mutex_t	forks[MAX_PHILO];
+	pthread_mutex_t	gate;
+}				t_mutex;
+
 
 // locks that we need
 // pthread_mutex_t msg; // lock for printing
@@ -53,15 +60,23 @@ typedef struct s_philo
 
 /*philos.c*/
 void	philos_join(t_philo *philos);
-void	philos_spawn(t_philo *philos);
-void	philos_init(t_philo *philos, t_attr *attrib, pthread_mutex_t *forks);
+void	philos_spawn(t_philo *philos, pthread_mutex_t *gate);
+void	philos_init(t_philo *philos, t_attr *attrib, t_mutex *mutex);
 void	*philo_run(void *this);
+void	governor(t_philo *philos, t_attr *attr, pthread_mutex_t	*forks);
 
-
+/* eatsleepdierepeat.c */
+void	print_state(size_t start_time, int philo_num, char *string);
+int		hit_the_hay(size_t	sleepytime);
+int		is_dead(size_t last_supper, size_t time_to_die);
+size_t	get_time_ms(void);
 
 /*utils.c*/
 int			ft_atoi(const char *str);
 int			ft_isdigit(int c);
+void		ft_putchar(char c);
+void		ft_putstr(char *string);
+void		ft_putnbr(int n);
 // static void	ft_sub(char *str, int len, int n);
 // static int	ft_len(int n, int *minus);
 // char		*ft_itoa(int n);
@@ -70,11 +85,10 @@ int			ft_isdigit(int c);
 /*errors.c*/
 void	error_handler(char *str);
 
-/*forks.c*/
-void	philos_init(t_philo *philos, t_attr *attrib, pthread_mutex_t *forks);
-void	philos_spawn(t_philo *philos);
-void	philos_join(t_philo *philos);
-void	forks_init(int num_philos, pthread_mutex_t	*forks);
-void	forks_destroy(int num_philos, pthread_mutex_t *forks);
+/*mutex.c*/
+void	mutex_init(int num_philos, t_mutex *mutex);
+void	mutex_destroy(int num_philos, t_mutex *mutex);
+// void	forks_init(int num_philos, pthread_mutex_t	*forks);
+// void	forks_destroy(int num_philos, pthread_mutex_t *forks);
 
 #endif

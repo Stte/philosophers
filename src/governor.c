@@ -1,39 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   forks.c                                            :+:      :+:    :+:   */
+/*   governor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rrask <rrask@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/12 16:19:57 by rrask             #+#    #+#             */
-/*   Updated: 2023/06/15 15:58:56 by rrask            ###   ########.fr       */
+/*   Created: 2023/06/16 11:27:41 by rrask             #+#    #+#             */
+/*   Updated: 2023/06/16 14:12:35 by rrask            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "philosophers.h"
 
-void	forks_init(int num_philos, pthread_mutex_t	*forks)
+static	void dead_philo_check(t_philo *philos, t_attr *attr)
 {
 	int i;
 
 	i = 0;
-	while (i < num_philos)
+	while (i < attr->philo_num)
 	{
-		if (pthread_mutex_init(forks + i, NULL) != 0)
-			error_handler("No forks here.");
+		if (is_dead(philos[i].last_supper, attr->time_to_die) == 1)
+			printf("Philosopher %d is dead.\n", philos[i].id);
 		i++;
 	}
 }
 
-void	forks_destroy(int num_philos, pthread_mutex_t *forks)
+void	governor(t_philo *philos, t_attr *attr, pthread_mutex_t	*forks)
 {
 	int i;
 
 	i = 0;
-	while (i < num_philos)
+	(void)forks;
+	while (1)
 	{
-		if (pthread_mutex_destroy(forks + i) != 0)
-			error_handler("Mutex is too powerful, we have failed in vanquishing it...");
-		i++;
+		dead_philo_check(philos, attr);
 	}
 }
