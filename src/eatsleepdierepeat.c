@@ -25,13 +25,13 @@ void	print_state(size_t start_time, int philo_num, char *string)
 	size_t lapsed_time;
 
 	lapsed_time = get_time_ms() - start_time;
-	ft_putnbr(lapsed_time);
+	printf("%zu Philosopher %d %s", lapsed_time, philo_num, string);
+/* 	ft_putnbr(lapsed_time);
 	ft_putchar(' ');
 	ft_putstr("Philosopher ");
 	ft_putnbr(philo_num);
 	ft_putchar(' ');
-	ft_putstr(string);
-	ft_putchar('\n');
+	ft_putstr(string); */
 }
 
 int	hit_the_hay(size_t	sleepytime)
@@ -43,39 +43,44 @@ int	hit_the_hay(size_t	sleepytime)
 		usleep(500);
 	return (0);
 }
-int	is_dead(size_t last_supper, size_t time_to_die)
+int	is_dead(t_philo *philo, size_t time_to_die)
 {
-	// last_supper is time they last ate, stored in attr?
-	if ((get_time_ms() - last_supper) > time_to_die)
+	printf("Philosopher %i hasn't eaten in %zu ms\n", philo->id, get_time_ms()- philo->last_supper);
+	// printf("Time to die is: %zu and from attr it's: %zu\n", time_to_die, philo->attr->time_to_die);
+	if (get_time_ms() - philo->last_supper >= time_to_die)
+	{
+		print_state(philo->attr->start_time, philo->id, "died\n");
 		return (1);
+	}
 	return (0);
 }
 
 void	eating(t_philo *philo, size_t time_to_eat)
 {
-	philo->last_supper = get_time_ms();
-	print_state(philo->attr->start_time, philo->id, "is eating");
+	size_t	last_supper;
+
+	last_supper = get_time_ms();
+	// printf("last supper was: %zu\n", get_time_ms());
+	// printf("Philo %i has eaten %i times\n",philo->id, philo->times_eaten);
+	print_state(philo->attr->start_time, philo->id, "is eating\n");
 	hit_the_hay(time_to_eat);
+	if (is_dead(philo, philo->attr->time_to_die))
+		return ;
+	philo->last_supper = last_supper;
 	philo->times_eaten += 1;
 }
 
-void	sleeping(t_attr philo, size_t time_to_sleep)
+void	sleeping(t_philo *philo, size_t time_to_sleep)
 {
-	print_state(philo.start_time, philo.philo_num, "is sleeping");
+	print_state(philo->attr->start_time, philo->id, "is sleeping\n");
 	hit_the_hay(time_to_sleep);
 }
 
-void	thinking(t_attr philo)
+void	thinking(t_philo *philo)
 {
-	print_state(philo.start_time, philo.philo_num, "is thinking");
-	
+	print_state(philo->attr->start_time, philo->id, "is thinking\n");
+	hit_the_hay(1);
 }
-/* int	eating(int time_to_eat)
-{
-	return (0);
-	// if it has both forks
-	// will be eating
-} */
 
 // void	
 
