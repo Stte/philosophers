@@ -10,51 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "philosophers.h"
+#include "philosophers.h"
 
-void	*philo_run(void *this)
-{
-	t_philo	*philo = (t_philo *)this;
-
-		pthread_mutex_lock(philo->gate);
-		pthread_mutex_unlock(philo->gate);
-		while (1)
-		{
-			if (philo->attr->times_must_eat)
-			{
-				if (philo->times_eaten == philo->attr->times_must_eat)
-				{
-					printf("Philosopher %d has eaten enough.\n", philo->id);
-					return (0);
-				}
-			}
-			if (is_dead(philo, philo->attr->time_to_die))
-			{
-				return (0);
-			}
-			if (philo->id % 2 == 0)
-			{
-				pthread_mutex_lock(philo->l_fork);
-				pthread_mutex_lock(philo->r_fork);
-
-				eating(philo, philo->attr->time_to_eat);
-				pthread_mutex_unlock(philo->l_fork);
-				pthread_mutex_unlock(philo->r_fork);
-			}
-			else
-			{
-				pthread_mutex_lock(philo->r_fork);
-				pthread_mutex_lock(philo->l_fork);
-				eating(philo, philo->attr->time_to_eat);
-				pthread_mutex_unlock(philo->r_fork);
-				pthread_mutex_unlock(philo->l_fork);
-			}
-			sleeping(philo, philo->attr->time_to_sleep);
-		}
-	return (this);
-}
-
-void	philos_init(t_philo *philos, t_attr *attrib, t_mutex *mutex) // change to use t_mutex  pthread_mutex_t *forks
+void	philos_init(t_philo *philos, t_attr *attrib, t_mutex *mutex)
 {
 	int i;
 

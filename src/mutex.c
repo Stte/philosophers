@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mutex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rrask <rrask@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tspoof <tspoof@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 16:19:57 by rrask             #+#    #+#             */
-/*   Updated: 2023/06/21 11:20:30 by rrask            ###   ########.fr       */
+/*   Updated: 2023/06/21 14:14:13 by tspoof           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,14 +42,16 @@ void	mutex_init(int num_philos, t_mutex *mutex)
 {
 	forks_init(num_philos, mutex->forks);
 	if (pthread_mutex_init(&mutex->gate, NULL) != 0)
-			error_handler("No forks here.");
+			error_handler("No gate here.");
 	if (pthread_mutex_init(&mutex->death, NULL) != 0)
-			error_handler("No forks here.");
+			error_handler("No death here.");
 }
 
 void	mutex_destroy(int num_philos, t_mutex *mutex)
 {
 	forks_destroy(num_philos, mutex->forks);
 	if (pthread_mutex_destroy(&mutex->gate) != 0)
+			error_handler("Mutex is too powerful, we have failed in vanquishing it...");
+	if (pthread_mutex_destroy(&mutex->death) != 0)
 			error_handler("Mutex is too powerful, we have failed in vanquishing it...");
 }

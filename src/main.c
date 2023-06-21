@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junheepoofi <junheepoofi@student.hive.fi>        +#+  +:+      
+/*   By: junheepoofi <junheepoofi@student.hive.fi>        +#+  +:+
 	+#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 09:51:23 by rrask             #+#    #+#             */
@@ -19,7 +19,7 @@ void	attr_set(t_attr *attr, int argc, char **argv)
 	attr->time_to_die = ft_atoi(argv[2]);
 	attr->time_to_eat = ft_atoi(argv[3]);
 	attr->time_to_sleep = ft_atoi(argv[4]);
-	// attr->times_must_eat = -1;
+	attr->times_must_eat = -1;
 	if (argc == ARG_MAX)
 		attr->times_must_eat = ft_atoi(argv[5]);
 	attr->start_time = get_time_ms();

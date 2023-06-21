@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philosophers.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rrask <rrask@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tspoof <tspoof@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 19:09:50 by rrask             #+#    #+#             */
-/*   Updated: 2023/06/21 11:31:54 by rrask            ###   ########.fr       */
+/*   Updated: 2023/06/21 14:17:35 by tspoof           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ typedef struct s_mutex
 
 // locks that we need
 // pthread_mutex_t msg; // lock for printing
-// pthread_mutex_t death; // mandatory lock for death checking
 
 /*philos.c*/
 void	philos_join(t_philo *philos);
