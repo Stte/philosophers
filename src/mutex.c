@@ -6,7 +6,7 @@
 /*   By: rrask <rrask@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 16:19:57 by rrask             #+#    #+#             */
-/*   Updated: 2023/06/21 11:20:30 by rrask            ###   ########.fr       */
+/*   Updated: 2023/06/22 15:54:23 by rrask            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static void	forks_init(int num_philos, pthread_mutex_t	*forks)
 	}
 }
 
-static void	forks_destroy(int num_philos, pthread_mutex_t *forks)
+void	forks_destroy(int num_philos, pthread_mutex_t *forks)
 {
 	int i;
 

@@ -12,45 +12,52 @@
 
 # include "philosophers.h"
 
+void	philo_even(t_philo *philo)
+{
+	pthread_mutex_lock(philo->l_fork); // protec fork?
+	printf("Philosopher %d has taken the left fork.\n", philo->id);
+	pthread_mutex_lock(philo->r_fork);// protec fork?
+	printf("Philosopher %d has taken the right fork.\n", philo->id);
+	eating(philo, philo->attr->time_to_eat);
+	pthread_mutex_unlock(philo->l_fork);
+	pthread_mutex_unlock(philo->r_fork);
+}
+void	philo_odd(t_philo *philo)
+{
+	pthread_mutex_lock(philo->r_fork);// protec fork?
+	printf("Philosopher %d has taken the right fork.\n", philo->id);
+	pthread_mutex_lock(philo->l_fork);// protec fork?
+	printf("Philosopher %d has taken the left fork.\n", philo->id);
+	eating(philo, philo->attr->time_to_eat);
+	pthread_mutex_unlock(philo->r_fork);
+	pthread_mutex_unlock(philo->l_fork);
+}
+
+
 void	*philo_run(void *this)
 {
 	t_philo	*philo = (t_philo *)this;
 
-		pthread_mutex_lock(philo->gate);
-		pthread_mutex_unlock(philo->gate);
-		while (1)
+	pthread_mutex_lock(philo->gate); // protec mutex?
+	pthread_mutex_unlock(philo->gate);
+	philo->last_supper = get_time_ms();
+	while (1)
+	{
+		if (philo->attr->times_must_eat >= 0
+			&& philo->times_eaten >= philo->attr->times_must_eat)
 		{
-			if (philo->attr->times_must_eat)
-			{
-				if (philo->times_eaten == philo->attr->times_must_eat)
-				{
-					printf("Philosopher %d has eaten enough.\n", philo->id);
-					return (0);
-				}
-			}
-			if (is_dead(philo, philo->attr->time_to_die))
-			{
-				return (0);
-			}
-			if (philo->id % 2 == 0)
-			{
-				pthread_mutex_lock(philo->l_fork);
-				pthread_mutex_lock(philo->r_fork);
-
-				eating(philo, philo->attr->time_to_eat);
-				pthread_mutex_unlock(philo->l_fork);
-				pthread_mutex_unlock(philo->r_fork);
-			}
-			else
-			{
-				pthread_mutex_lock(philo->r_fork);
-				pthread_mutex_lock(philo->l_fork);
-				eating(philo, philo->attr->time_to_eat);
-				pthread_mutex_unlock(philo->r_fork);
-				pthread_mutex_unlock(philo->l_fork);
-			}
-			sleeping(philo, philo->attr->time_to_sleep);
+			printf("Philosopher %d has eaten enough.\n", philo->id);
+			return (0);
 		}
+		// if (is_dead(philo, philo->attr->time_to_die))
+		if (philo->is_dead) // mutex?
+			break ;
+		if (philo->id % 2 == 0)
+			philo_even(philo);
+		else
+			philo_odd(philo);
+		sleeping(philo, philo->attr->time_to_sleep);
+	}
 	return (this);
 }
 
@@ -72,16 +79,16 @@ void	philos_init(t_philo *philos, t_attr *attrib, t_mutex *mutex) // change to u
 		philos[i].id = i;
 		philos[i].is_dead = 0;
 		philos[i].times_eaten = 0;
-		philos[i].last_supper = get_time_ms();
 		i++;
 	}
 }
 
-void	philos_spawn(t_philo *philos, pthread_mutex_t *gate)
+void	philos_spawn(t_philo *philos, pthread_mutex_t *gate, t_mutex *mutex)
 {
 	int i;
 
 	i = 0;
+	// (void)mutex;
 	pthread_mutex_lock(gate);
 	while (i < philos->attr->philo_num)
 	{

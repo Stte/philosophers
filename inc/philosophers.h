@@ -6,7 +6,7 @@
 /*   By: rrask <rrask@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 19:09:50 by rrask             #+#    #+#             */
-/*   Updated: 2023/06/21 11:31:54 by rrask            ###   ########.fr       */
+/*   Updated: 2023/06/23 11:23:28 by rrask            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,10 +64,10 @@ typedef struct s_mutex
 
 /*philos.c*/
 void	philos_join(t_philo *philos);
-void	philos_spawn(t_philo *philos, pthread_mutex_t *gate);
+void	philos_spawn(t_philo *philos, pthread_mutex_t *gate, t_mutex *mutex);
 void	philos_init(t_philo *philos, t_attr *attrib, t_mutex *mutex);
 void	*philo_run(void *this);
-int		governor(t_philo *philos, t_attr *attr, pthread_mutex_t	*forks);
+void	governor(t_philo *philos, t_attr *attr, t_mutex	*forks);
 int		dead_philo_check(t_philo *philos, t_attr *attr);
 
 /* eatsleepdierepeat.c */
@@ -96,6 +96,7 @@ void	error_handler(char *str);
 /*mutex.c*/
 void	mutex_init(int num_philos, t_mutex *mutex);
 void	mutex_destroy(int num_philos, t_mutex *mutex);
+void	forks_destroy(int num_philos, pthread_mutex_t *forks);
 // void	forks_init(int num_philos, pthread_mutex_t	*forks);
 // void	forks_destroy(int num_philos, pthread_mutex_t *forks);
 
