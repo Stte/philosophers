@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: rrask <rrask@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/12 19:09:50 by rrask             #+#    #+#             */
-/*   Updated: 2023/06/24 18:52:23 by rrask            ###   ########.fr       */
+/*   Created: 2023/06/24 21:09:28 by rrask             #+#    #+#             */
+/*   Updated: 2023/06/24 21:09:34 by rrask            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ typedef struct s_philo
 	pthread_mutex_t	*l_fork;
 	pthread_mutex_t	*gate;
 	pthread_mutex_t	*death;
+	pthread_mutex_t	*print;
 	size_t			last_supper;
 	t_attr			*attr;
 }					t_philo;
@@ -55,6 +56,7 @@ typedef struct s_mutex
 	pthread_mutex_t	forks[MAX_PHILO];
 	pthread_mutex_t	deaths[MAX_PHILO];
 	pthread_mutex_t	gate;
+	pthread_mutex_t	print;
 }				t_mutex;
 
 
@@ -71,7 +73,7 @@ void	governor(t_philo *philos, t_attr *attr, t_mutex	*forks);
 int		dead_philo_check(t_philo *philos, t_attr *attr);
 
 /* eatsleepdierepeat.c */
-void	print_state(size_t start_time, int philo_num, char *string);
+void	print_state(t_philo *philo,  char *string);
 int		ft_usleep(t_philo *philo, size_t time_to_snooze);
 int		is_dead(t_philo *philo, size_t time_to_die);
 void	eating(t_philo *philo, size_t time_to_eat);

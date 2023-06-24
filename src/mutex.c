@@ -6,7 +6,7 @@
 /*   By: rrask <rrask@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 16:19:57 by rrask             #+#    #+#             */
-/*   Updated: 2023/06/24 20:40:32 by rrask            ###   ########.fr       */
+/*   Updated: 2023/06/24 21:04:33 by rrask            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ void	mutex_init(int num_philos, t_mutex *mutex)
 	mutex_array_init(num_philos, mutex->deaths);
 	if (pthread_mutex_init(&mutex->gate, NULL) != 0)
 			error_handler("No forks here.");
+	if (pthread_mutex_init(&mutex->print, NULL) != 0)
+			error_handler("No forks here.");
 }
 
 void	mutex_destroy(int num_philos, t_mutex *mutex)
@@ -51,5 +53,7 @@ void	mutex_destroy(int num_philos, t_mutex *mutex)
 	mutex_array_destroy(num_philos, mutex->forks);
 	mutex_array_destroy(num_philos, mutex->deaths);
 	if (pthread_mutex_destroy(&mutex->gate) != 0)
+			error_handler("Mutex init failed.");
+	if (pthread_mutex_destroy(&mutex->print) != 0)
 			error_handler("Mutex init failed.");
 }

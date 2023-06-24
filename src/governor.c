@@ -28,8 +28,11 @@ void	kill_all(t_philo *philos, int idx)
 	while (i < philos[0].attr->philo_num)
 	{
 		if (i == idx)
+		{
+			philos[i].is_dead = 1;
 			i++;
-		pthread_mutex_lock(philos[i].death); // don't work
+		}
+		pthread_mutex_lock(philos[i].death);
 		if (!philos[i].is_dead)
 			philos[i].is_dead = 1;
 		pthread_mutex_unlock(philos[i].death);
@@ -49,7 +52,7 @@ int	dead_philo_check(t_philo *philos, t_attr *attr)
 		{
 			kill_all(philos, i);
 			pthread_mutex_unlock(philos[i].death);
-			print_state(philos->attr->start_time, philos->id, "has died");
+			print_state(philos + i, "has died");
 			return (1);
 		}
 		pthread_mutex_unlock(philos[i].death);
@@ -64,15 +67,16 @@ void	governor(t_philo *philos, t_attr *attr, t_mutex *mutex)
 
 	i = 0;
 	(void)mutex;
-	if (dead_philo_check(philos, attr))
-		return ;
-	if (attr->times_must_eat >= 0
-		&& philos[i].times_eaten == attr->times_must_eat)
+	while (1)
 	{
-		print_state(philos->attr->start_time, 
-				philos->id, 
-				"has eaten enough");
-		return ;
+		if (dead_philo_check(philos, attr))
+			return ;
+		if (attr->times_must_eat >= 0
+			&& philos[i].times_eaten == attr->times_must_eat)
+		{
+			print_state( philos + i, "has eaten enough");
+			return ;
+		}
 	}
 	return ;
 }

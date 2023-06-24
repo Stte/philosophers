@@ -20,13 +20,14 @@ size_t	get_time_ms(void)
 	return (time.tv_sec * 1000 + time.tv_usec / 1000);
 }
 
-void	print_state(size_t start_time, int philo_num, char *string)
+void	print_state(t_philo *philo,  char *string)
 {
 	size_t lapsed_time;
 
-	// print lock?
-	lapsed_time = get_time_ms() - start_time;
-	printf("%zu %d %s\n", lapsed_time, philo_num, string);
+	pthread_mutex_lock(philo->print);
+	lapsed_time = get_time_ms() - philo->attr->start_time;
+	printf("%zu %d %s\n", lapsed_time, philo->id, string);
+	pthread_mutex_unlock(philo->print);
 }
 
 int	ft_usleep(t_philo *philo, size_t time_to_snooze)
@@ -34,12 +35,12 @@ int	ft_usleep(t_philo *philo, size_t time_to_snooze)
 	size_t	the_time;
 
 	the_time = get_time_ms();
+	pthread_mutex_lock(philo->death);
 	while (!(philo->is_dead) && (get_time_ms() - the_time) < time_to_snooze)
 	{
+		pthread_mutex_unlock(philo->death);
 		usleep(500);
 	}
-		//cha cha real smooth (it's 500 microseconds)
-		//What is this? A crossover episode?
 	return (0);
 }
 
@@ -49,11 +50,8 @@ void	eating(t_philo *philo, size_t time_to_eat)
 	size_t	last_supper;
 
 	last_supper = get_time_ms();
-	// printf("last supper was: %zu\n", get_time_ms());
-	// printf("Philo %i has eaten %i times\n",philo->id, philo->times_eaten);
-	print_state(philo->attr->start_time, philo->id, "is eating");
+	print_state(philo, "is eating");
 	ft_usleep(philo, time_to_eat);
-	// if (is_dead(philo, philo->attr->time_to_die) == 1)
 	if (philo->is_dead)
 		return ; //Stop everything
 	philo->last_supper = last_supper;
@@ -62,12 +60,12 @@ void	eating(t_philo *philo, size_t time_to_eat)
 
 void	hit_the_hay(t_philo *philo)
 {
-	print_state(philo->attr->start_time, philo->id, "is sleeping");
+	print_state(philo, "is sleeping");
 	ft_usleep(philo, philo->attr->time_to_sleep);
 }
 
 void	thinking(t_philo *philo)
 {
-	print_state(philo->attr->start_time, philo->id, "is thinking");
+	print_state(philo, "is thinking");
 	// ft_usleep(philo, 1);
 }

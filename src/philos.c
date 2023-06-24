@@ -62,7 +62,13 @@ void	*philo_run(void *this)
 		// grab the forks check philo id
 		// eat
 		// release the forks
-
+		pthread_mutex_lock(philo->death);
+		if (philo->is_dead)
+		{
+			pthread_mutex_unlock(philo->death);
+			return (this);
+		}
+		pthread_mutex_unlock(philo->death);
 		hit_the_hay(philo);
 	}
 	return (this);
@@ -83,6 +89,7 @@ void	philos_init(t_philo *philos, t_attr *attrib, t_mutex *mutex) // change to u
 			philos[i].r_fork = &mutex->forks[i + 1];
 		philos[i].gate = &mutex->gate;
 		philos[i].death = &mutex->deaths[i];
+		philos[i].print = &mutex->print;
 		philos[i].id = i;
 		philos[i].is_dead = 0;
 		philos[i].times_eaten = 0;
