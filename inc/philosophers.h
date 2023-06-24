@@ -6,7 +6,7 @@
 /*   By: rrask <rrask@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 19:09:50 by rrask             #+#    #+#             */
-/*   Updated: 2023/06/23 11:23:28 by rrask            ###   ########.fr       */
+/*   Updated: 2023/06/24 18:52:23 by rrask            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ typedef struct s_attr
 
 typedef struct s_philo
 {
-	unsigned int	id;
+	int				id;
 	int				is_dead;
 	int				times_eaten;
 	pthread_t		thread;
@@ -53,8 +53,8 @@ typedef struct s_philo
 typedef struct s_mutex
 {
 	pthread_mutex_t	forks[MAX_PHILO];
+	pthread_mutex_t	deaths[MAX_PHILO];
 	pthread_mutex_t	gate;
-	pthread_mutex_t	death;
 }				t_mutex;
 
 
@@ -64,7 +64,7 @@ typedef struct s_mutex
 
 /*philos.c*/
 void	philos_join(t_philo *philos);
-void	philos_spawn(t_philo *philos, pthread_mutex_t *gate, t_mutex *mutex);
+void	philos_spawn(t_philo *philos, pthread_mutex_t *gate);
 void	philos_init(t_philo *philos, t_attr *attrib, t_mutex *mutex);
 void	*philo_run(void *this);
 void	governor(t_philo *philos, t_attr *attr, t_mutex	*forks);
@@ -72,10 +72,10 @@ int		dead_philo_check(t_philo *philos, t_attr *attr);
 
 /* eatsleepdierepeat.c */
 void	print_state(size_t start_time, int philo_num, char *string);
-int		hit_the_hay(size_t	sleepytime);
+int		ft_usleep(t_philo *philo, size_t time_to_snooze);
 int		is_dead(t_philo *philo, size_t time_to_die);
 void	eating(t_philo *philo, size_t time_to_eat);
-void	sleeping(t_philo *philo, size_t time_to_sleep);
+void	hit_the_hay(t_philo *philo);
 void	thinking(t_philo *philo);
 size_t	get_time_ms(void);
 

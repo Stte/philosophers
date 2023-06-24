@@ -43,20 +43,27 @@ void	*philo_run(void *this)
 	philo->last_supper = get_time_ms();
 	while (1)
 	{
-		if (philo->attr->times_must_eat >= 0
-			&& philo->times_eaten >= philo->attr->times_must_eat)
-		{
-			printf("Philosopher %d has eaten enough.\n", philo->id);
-			return (0);
-		}
+		// if (philo->attr->dead_philo == 1)
+		// 	printf("HE IS DEAD, NORMAN, DEAD.\n");
+		// if (philo->attr->times_must_eat >= 0
+		// 	&& philo->times_eaten >= philo->attr->times_must_eat)
+		// {
+		// 	printf("Philosopher %d has eaten enough.\n", philo->id);
+		// 	return (0);
+		// }
 		// if (is_dead(philo, philo->attr->time_to_die))
-		if (philo->is_dead) // mutex?
-			break ;
-		if (philo->id % 2 == 0)
-			philo_even(philo);
-		else
-			philo_odd(philo);
-		sleeping(philo, philo->attr->time_to_sleep);
+		// if (philo->id % 2 == 0)
+		// 	philo_even(philo);
+		// else
+		// 	philo_odd(philo);
+
+		// Is is_dead flag raised. stop
+		// If times_eaten is equal to times_must_eat then don't eat anymore.
+		// grab the forks check philo id
+		// eat
+		// release the forks
+
+		hit_the_hay(philo);
 	}
 	return (this);
 }
@@ -75,7 +82,7 @@ void	philos_init(t_philo *philos, t_attr *attrib, t_mutex *mutex) // change to u
 		else
 			philos[i].r_fork = &mutex->forks[i + 1];
 		philos[i].gate = &mutex->gate;
-		philos[i].death = &mutex->death;
+		philos[i].death = &mutex->deaths[i];
 		philos[i].id = i;
 		philos[i].is_dead = 0;
 		philos[i].times_eaten = 0;
@@ -83,12 +90,13 @@ void	philos_init(t_philo *philos, t_attr *attrib, t_mutex *mutex) // change to u
 	}
 }
 
-void	philos_spawn(t_philo *philos, pthread_mutex_t *gate, t_mutex *mutex)
+void	philos_spawn(t_philo *philos, pthread_mutex_t *gate)
 {
 	int i;
 
+	(void)gate;
+
 	i = 0;
-	// (void)mutex;
 	pthread_mutex_lock(gate);
 	while (i < philos->attr->philo_num)
 	{
@@ -96,6 +104,7 @@ void	philos_spawn(t_philo *philos, pthread_mutex_t *gate, t_mutex *mutex)
 		i++;
 	}
 	pthread_mutex_unlock(gate);
+	printf("All philosophers have been spawned.\n");
 }
 
 void	philos_join(t_philo *philos)

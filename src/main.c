@@ -19,7 +19,7 @@ void	attr_set(t_attr *attr, int argc, char **argv)
 	attr->time_to_die = ft_atoi(argv[2]);
 	attr->time_to_eat = ft_atoi(argv[3]);
 	attr->time_to_sleep = ft_atoi(argv[4]);
-	// attr->times_must_eat = -1;
+	attr->times_must_eat = -1;
 	if (argc == ARG_MAX)
 		attr->times_must_eat = ft_atoi(argv[5]);
 	attr->start_time = get_time_ms();
@@ -45,9 +45,9 @@ int	main(int argc, char **argv)
 	attr_set(&attributes, argc, argv);
 	mutex_init(attributes.philo_num, &mutex);
 	philos_init(philos, &attributes, &mutex);
-	philos_spawn(philos, &mutex.gate, &mutex);
+	philos_spawn(philos, &mutex.gate);
 	governor(philos, philos->attr, &mutex);
-	// philos_join(philos);
+	philos_join(philos);
 	// mutex_destroy(attributes.philo_num, &mutex);
 	return (0);
 }
