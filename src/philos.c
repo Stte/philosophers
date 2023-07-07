@@ -13,22 +13,22 @@
 
 #include "philosophers.h"
 
-void	philo_even(t_philo *philo)
+// void	eat_even(t_philo *philo)
+// {
+// 	pthread_mutex_lock(philo->l_fork);
+// 	print_state(philo, "has taken a fork");
+// 	pthread_mutex_lock(philo->r_fork);
+// 	print_state(philo, "has taken a fork");
+// 	eating(philo, philo->attr->time_to_eat);
+// 	pthread_mutex_unlock(philo->l_fork);
+// 	pthread_mutex_unlock(philo->r_fork);
+// }
+void	eat_odd(t_philo *philo)
 {
-	pthread_mutex_lock(philo->l_fork); // protec fork?
-	printf("Philosopher %d has taken the left fork.\n", philo->id);
-	pthread_mutex_lock(philo->r_fork); // protec fork?
-	printf("Philosopher %d has taken the right fork.\n", philo->id);
-	eating(philo, philo->attr->time_to_eat);
-	pthread_mutex_unlock(philo->l_fork);
-	pthread_mutex_unlock(philo->r_fork);
-}
-void	philo_odd(t_philo *philo)
-{
-	pthread_mutex_lock(philo->r_fork); // protec fork?
-	printf("Philosopher %d has taken the right fork.\n", philo->id);
-	pthread_mutex_lock(philo->l_fork); // protec fork?
-	printf("Philosopher %d has taken the left fork.\n", philo->id);
+	pthread_mutex_lock(philo->r_fork);
+	print_state(philo, "has taken a fork");
+	pthread_mutex_lock(philo->l_fork);
+	print_state(philo, "has taken a fork");
 	eating(philo, philo->attr->time_to_eat);
 	pthread_mutex_unlock(philo->r_fork);
 	pthread_mutex_unlock(philo->l_fork);
@@ -55,6 +55,8 @@ void	*philo_run(void *this)
 	pthread_mutex_unlock(philo->gate);
 	// philo->last_supper = get_time_ms();
 		// governor can be faster than this is set
+	if (philo->id % 2 == 0)
+		ft_usleep(philo, 10);
 	while (1)
 	{
 		// if (philo->attr->dead_philo == 1)
@@ -77,7 +79,9 @@ void	*philo_run(void *this)
 		// release the forks
 		if (philo_check_death(philo))
 			return (this);
+		eat_odd(philo);
 		hit_the_hay(philo);
+		thinking(philo);
 	}
 	return (this);
 }
@@ -119,8 +123,8 @@ void	philos_spawn(t_philo *philos, pthread_mutex_t *gate)
 		pthread_create(&philos[i].thread, NULL, &philo_run, philos + i);
 		i++;
 	}
-	pthread_mutex_unlock(gate);
 	printf("All philosophers have been spawned.\n");
+	pthread_mutex_unlock(gate);
 }
 
 void	philos_join(t_philo *philos)
@@ -131,7 +135,7 @@ void	philos_join(t_philo *philos)
 	while (i < philos->attr->philo_num)
 	{
 		pthread_join(philos[i].thread, NULL);
-		printf("Philosopher %d has been terminated.\n", i);
+		// printf("Philosopher %d has been terminated.\n", i);
 		i++;
 	}
 }

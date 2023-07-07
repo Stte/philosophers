@@ -6,7 +6,7 @@
 /*   By: tspoof <tspoof@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 15:51:33 by rrask             #+#    #+#             */
-/*   Updated: 2023/07/07 16:26:15 by tspoof           ###   ########.fr       */
+/*   Updated: 2023/07/07 17:41:24 by tspoof           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	dead_philo_check(t_philo *philos, t_attr *attr)
 			philos[i].is_dead = 1;
 			pthread_mutex_unlock(philos[i].death);
 			kill_all(philos);
-			print_state(philos + i, "has died");
+			print_state(philos + i, "died");
 			return (1);
 		}
 		pthread_mutex_unlock(philos[i].death);

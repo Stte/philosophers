@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junheepoofi <junheepoofi@student.hive.fi>        +#+  +:+      
+/*   By: junheepoofi <junheepoofi@student.hive.fi>        +#+  +:+
 	+#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 09:51:23 by rrask             #+#    #+#             */
@@ -30,7 +30,7 @@ void	attr_set(t_attr *attr, int argc, char **argv)
 		return ;
 	}
 }
-
+// argv = [num_philo, time_to_die, time_to_eat, time_to_sleep, times_must_eat]
 int	main(int argc, char **argv)
 {
 	t_attr			attributes;

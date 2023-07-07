@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   eatsleepdierepeat.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nvn-den <nvn-den@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: tspoof <tspoof@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 11:23:43 by rrask             #+#    #+#             */
-/*   Updated: 2023/06/16 14:57:26 by nvn-den         ###   ########.fr       */
+/*   Updated: 2023/07/07 17:57:44 by tspoof           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,25 +45,32 @@ int	ft_usleep(t_philo *philo, size_t time_to_snooze)
 
 void	eating(t_philo *philo, size_t time_to_eat)
 {
-	size_t	last_supper;
+	// size_t	last_supper;
 
-	last_supper = get_time_ms();
+	pthread_mutex_lock(philo->death);
+	if (philo->is_dead)
+	{
+		pthread_mutex_unlock(philo->death);
+		return ;
+	}
+	philo->last_supper = get_time_ms();
+	philo->times_eaten += 1;
+	pthread_mutex_unlock(philo->death);
 	print_state(philo, "is eating");
 	ft_usleep(philo, time_to_eat);
-	if (philo->is_dead)
-		return ; //Stop everything
-	philo->last_supper = last_supper;
-	philo->times_eaten += 1;
 }
 
 void	hit_the_hay(t_philo *philo)
 {
+	if (philo_check_death(philo))
+		return ;
 	print_state(philo, "is sleeping");
 	ft_usleep(philo, philo->attr->time_to_sleep);
 }
 
 void	thinking(t_philo *philo)
 {
+	if (philo_check_death(philo))
+		return ;
 	print_state(philo, "is thinking");
-	// ft_usleep(philo, 1);
 }
