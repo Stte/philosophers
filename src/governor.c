@@ -32,6 +32,8 @@ void	kill_all(t_philo *philos, int idx)
 			philos[i].is_dead = 1;
 			i++;
 		}
+		if (i >= philos[0].attr->philo_num)
+			break ;
 		pthread_mutex_lock(philos[i].death);
 		if (!philos[i].is_dead)
 			philos[i].is_dead = 1;
