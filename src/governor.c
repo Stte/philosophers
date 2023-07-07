@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   governor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rrask <rrask@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tspoof <tspoof@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 15:51:33 by rrask             #+#    #+#             */
-/*   Updated: 2023/06/23 12:41:556 by rrask            ###   ########.fr       */
+/*   Updated: 2023/07/07 16:26:15 by tspoof           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,24 +19,15 @@ int	is_dead(t_philo *philo, size_t time_to_die)
 	return (0);
 }
 
-void	kill_all(t_philo *philos, int idx)
+void	kill_all(t_philo *philos)
 {
 	int i;
 
-	// pthread_mutex_unlock(philos[idx].death);
 	i = 0;
 	while (i < philos[0].attr->philo_num)
 	{
-		if (i == idx)
-		{
-			philos[i].is_dead = 1;
-			i++;
-		}
-		if (i >= philos[0].attr->philo_num)
-			break ;
 		pthread_mutex_lock(philos[i].death);
-		if (!philos[i].is_dead)
-			philos[i].is_dead = 1;
+		philos[i].is_dead = 1;
 		pthread_mutex_unlock(philos[i].death);
 		i++;
 	}
@@ -52,8 +43,9 @@ int	dead_philo_check(t_philo *philos, t_attr *attr)
 		pthread_mutex_lock(philos[i].death);
 		if (is_dead(&philos[i], attr->time_to_die))
 		{
-			kill_all(philos, i);
+			philos[i].is_dead = 1;
 			pthread_mutex_unlock(philos[i].death);
+			kill_all(philos);
 			print_state(philos + i, "has died");
 			return (1);
 		}
