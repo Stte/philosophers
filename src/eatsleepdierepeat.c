@@ -35,10 +35,8 @@ int	ft_usleep(t_philo *philo, size_t time_to_snooze)
 	size_t	the_time;
 
 	the_time = get_time_ms();
-	pthread_mutex_lock(philo->death);
-	while (!(philo->is_dead) && (get_time_ms() - the_time) < time_to_snooze)
+	while (!philo_check_death(philo) && (get_time_ms() - the_time) < time_to_snooze)
 	{
-		pthread_mutex_unlock(philo->death);
 		usleep(500);
 	}
 	return (0);
