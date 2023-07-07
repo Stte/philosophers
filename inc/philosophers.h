@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philosophers.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rrask <rrask@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tspoof <tspoof@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/24 21:09:28 by rrask             #+#    #+#             */
-/*   Updated: 2023/06/24 21:09:34 by rrask            ###   ########.fr       */
+/*   Updated: 2023/07/07 14:04:50 by tspoof           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,9 @@ void	philos_join(t_philo *philos);
 void	philos_spawn(t_philo *philos, pthread_mutex_t *gate);
 void	philos_init(t_philo *philos, t_attr *attrib, t_mutex *mutex);
 void	*philo_run(void *this);
+int		philo_check_death(t_philo *philo);
+
+/*governor.c*/
 void	governor(t_philo *philos, t_attr *attr, t_mutex	*forks);
 int		dead_philo_check(t_philo *philos, t_attr *attr);
 
