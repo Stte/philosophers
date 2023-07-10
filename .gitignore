@@ -52,6 +52,7 @@ Mkfile.old
 dkms.conf
 
 #own stuff
-philo
+philo/philo
 .DS_Store
 .vscode/
+philo/outfile
