@@ -6,7 +6,7 @@
 /*   By: tspoof <tspoof@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/09 14:59:08 by tspoof            #+#    #+#             */
-/*   Updated: 2023/07/11 05:44:30 by tspoof           ###   ########.fr       */
+/*   Updated: 2023/07/11 14:42:26 by tspoof           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	philos_init(t_philo *philos, t_attr *attrib, t_mutex *mutex)
 		philos[i].gate = &mutex->gate;
 		philos[i].death = &mutex->deaths[i];
 		philos[i].print = &mutex->print;
-		philos[i].id = i;
+		philos[i].id = i + 1;
 		philos[i].is_dead = 0;
 		philos[i].times_eaten = 0;
 		philos[i].last_supper = get_time_ms();

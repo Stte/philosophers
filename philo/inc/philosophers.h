@@ -6,7 +6,7 @@
 /*   By: tspoof <tspoof@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/24 21:09:28 by rrask             #+#    #+#             */
-/*   Updated: 2023/07/11 06:01:09 by tspoof           ###   ########.fr       */
+/*   Updated: 2023/07/11 14:41:54 by tspoof           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ int					ft_atoi(const char *str);
 
 /*printing.c*/
 void				print_state(t_philo *philo, char *string);
-void				print_death(t_philo *philo);
+void				print_death(t_philo philo);
 
 /*errors.c*/
 void				error_handler(char *str);

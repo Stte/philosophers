@@ -6,7 +6,7 @@ O			= obj/
 OBJ			= $(SRC:$S%=$O%.o)
 
 INCLUDES = -Iinc
-CFLAGS = -Wall -Wextra -Werror -MMD -O3 -pthread #-fsanitize=thread -static-libsan
+CFLAGS = -Wall -Wextra -Werror -O3 -pthread #-fsanitize=thread -static-libsan
 
 SRC = \
 $S/main.c		$S/mutex.c			$S/errors.c			$S/utils.c		$S/philo.c		\

@@ -6,7 +6,7 @@
 /*   By: tspoof <tspoof@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 05:48:40 by tspoof            #+#    #+#             */
-/*   Updated: 2023/07/11 05:51:36 by tspoof           ###   ########.fr       */
+/*   Updated: 2023/07/11 14:42:53 by tspoof           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,12 @@ void	print_state(t_philo *philo, char *string)
 	pthread_mutex_unlock(philo->print);
 }
 
-void	print_death(t_philo *philo)
+void	print_death(t_philo philo)
 {
 	size_t	lapsed_time;
 
-	pthread_mutex_lock(philo->print);
-	lapsed_time = get_time_ms() - philo->attr->start_time;
-	printf("%zu %d %s\n", lapsed_time, philo->id, "died");
-	pthread_mutex_unlock(philo->print);
+	pthread_mutex_lock(philo.print);
+	lapsed_time = get_time_ms() - philo.attr->start_time;
+	printf("%zu %d %s\n", lapsed_time, philo.id, "died");
+	pthread_mutex_unlock(philo.print);
 }

@@ -6,7 +6,7 @@
 /*   By: tspoof <tspoof@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 18:50:58 by rrask             #+#    #+#             */
-/*   Updated: 2023/07/09 19:33:46 by tspoof           ###   ########.fr       */
+/*   Updated: 2023/07/11 14:42:40 by tspoof           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	*philo_run(void *this)
 	philo = (t_philo *)this;
 	pthread_mutex_lock(philo->gate);
 	pthread_mutex_unlock(philo->gate);
-	if (philo->id % 2 != 0)
+	if (philo->id % 2 == 0)
 		ft_usleep(philo, 10);
 	while (1)
 	{
