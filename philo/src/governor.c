@@ -6,21 +6,11 @@
 /*   By: tspoof <tspoof@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 15:51:33 by rrask             #+#    #+#             */
-/*   Updated: 2023/07/11 05:22:05 by tspoof           ###   ########.fr       */
+/*   Updated: 2023/07/11 06:01:53 by tspoof           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
-
-static void	print_death(t_philo *philo)
-{
-	size_t	lapsed_time;
-
-	pthread_mutex_lock(philo->print);
-	lapsed_time = get_time_ms() - philo->attr->start_time;
-	printf("%zu %d %s\n", lapsed_time, philo->id, "died");
-	pthread_mutex_unlock(philo->print);
-}
 
 static int	is_dead(t_philo *philo, size_t time_to_die)
 {
@@ -65,7 +55,7 @@ static int	check_death(t_philo *philos, t_attr *attr)
 	return (0);
 }
 
-static int check_eaten(t_philo *philos)
+static int	check_eaten(t_philo *philos)
 {
 	int	i;
 	int	philos_full;
@@ -99,6 +89,5 @@ void	governor(t_philo *philos, t_attr *attr)
 	{
 		if (check_death(philos, attr) || check_eaten(philos))
 			return ;
-
 	}
 }

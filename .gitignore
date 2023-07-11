@@ -56,3 +56,4 @@ philo/philo
 .DS_Store
 .vscode/
 philo/outfile
+philo/obj

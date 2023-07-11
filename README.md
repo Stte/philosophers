@@ -6,11 +6,11 @@ eg. `./philo 15 310 100 200 20`
 
 
 Error codes
-0 all good
-1 args wrong
-2 attrs wrong
-3 mutex init failed
-4 mutex destroy failed
+- 0 all good
+- 1 args wrong
+- 2 attrs wrong
+- 3 mutex init failed
+- 4 mutex destroy failed
 
 
 

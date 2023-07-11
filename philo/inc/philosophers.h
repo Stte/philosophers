@@ -6,24 +6,19 @@
 /*   By: tspoof <tspoof@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/24 21:09:28 by rrask             #+#    #+#             */
-/*   Updated: 2023/07/09 15:30:34 by tspoof           ###   ########.fr       */
+/*   Updated: 2023/07/11 06:01:09 by tspoof           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILOSOPHERS_H
+# include <pthread.h>
+# include <stdio.h>
+# include <sys/time.h>
+# include <unistd.h>
 # define PHILOSOPHERS_H
 # define ARG_MIN 5
 # define ARG_MAX 6
-# define RAS_MAX 2147483647
-# define RAS_MIN -2147483648
 # define MAX_PHILO 250
-# include <pthread.h>
-# include <stdio.h>
-# include <stdlib.h>
-# include <sys/time.h>
-# include <unistd.h>
-
-pthread_mutex_t		my_mutex;
 
 typedef struct s_attr
 {
@@ -79,17 +74,19 @@ void				eat(t_philo *philo, size_t time_to_eat);
 void				hit_the_hay(t_philo *philo);
 void				think(t_philo *philo);
 
-
 /*mutex.c*/
 int					mutex_init(int num_philos, t_mutex *mutex);
 int					mutex_destroy(int num_philos, t_mutex *mutex);
 
 /*utils.c*/
 size_t				get_time_ms(void);
-void				print_state(t_philo *philo, char *string);
 int					ft_usleep(t_philo *philo, size_t time_to_snooze);
 int					ft_strlen(char *str);
 int					ft_atoi(const char *str);
+
+/*printing.c*/
+void				print_state(t_philo *philo, char *string);
+void				print_death(t_philo *philo);
 
 /*errors.c*/
 void				error_handler(char *str);

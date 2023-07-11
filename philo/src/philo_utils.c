@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philos_utils.c                                     :+:      :+:    :+:   */
+/*   philo_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tspoof <tspoof@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/09 14:59:08 by tspoof            #+#    #+#             */
-/*   Updated: 2023/07/09 14:59:29 by tspoof           ###   ########.fr       */
+/*   Updated: 2023/07/11 05:44:30 by tspoof           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ void	philos_spawn(t_philo *philos, pthread_mutex_t *gate)
 		pthread_create(&philos[i].thread, NULL, &philo_run, philos + i);
 		i++;
 	}
-	printf("All philosophers have been spawned.\n");
 	pthread_mutex_unlock(gate);
 }
 

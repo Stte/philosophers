@@ -6,7 +6,7 @@
 /*   By: tspoof <tspoof@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/09 15:11:24 by tspoof            #+#    #+#             */
-/*   Updated: 2023/07/09 19:39:30 by tspoof           ###   ########.fr       */
+/*   Updated: 2023/07/11 06:02:28 by tspoof           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,28 +20,13 @@ size_t	get_time_ms(void)
 	return (time.tv_sec * 1000 + time.tv_usec / 1000);
 }
 
-void	print_state(t_philo *philo, char *string)
-{
-	size_t	lapsed_time;
-
-	pthread_mutex_lock(philo->print);
-	if (philo_check_death(philo))
-	{
-		pthread_mutex_unlock(philo->print);
-		return ;
-	}
-	lapsed_time = get_time_ms() - philo->attr->start_time;
-	printf("%zu %d %s\n", lapsed_time, philo->id, string);
-	pthread_mutex_unlock(philo->print);
-}
-
 int	ft_usleep(t_philo *philo, size_t time_to_snooze)
 {
 	size_t	the_time;
 
 	the_time = get_time_ms();
 	while (!philo_check_death(philo)
-			&& (get_time_ms() - the_time) < time_to_snooze)
+		&& (get_time_ms() - the_time) < time_to_snooze)
 	{
 		usleep(500);
 	}

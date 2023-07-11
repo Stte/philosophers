@@ -10,13 +10,8 @@ INCLUDES = -Iinc
 CFLAGS = -Wall -Wextra -Werror -MMD -O3 -pthread #-fsanitize=thread -static-libsan
 
 SRC = \
-<<<<<<< HEAD:philo/Makefile
 main.c			mutex.c			errors.c			utils.c			philo.c		\
-governor.c		philo_actions.c	philo_utils.c		attr.c
-=======
-main.c		mutex.c		errors.c		utils.c		more_utils.c		philos.c \
-governor.c	eatsleepdierepeat.c			philos_run.c
->>>>>>> b4a66243474a5c4c6c3d6bd0f0215d7fe83346f3:Makefile
+governor.c		philo_actions.c	philo_utils.c		attr.c			printing.c
 
 DEP = $(OBJ:.o=.d)
 
