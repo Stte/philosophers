@@ -6,7 +6,7 @@
 /*   By: tspoof <tspoof@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 15:51:33 by rrask             #+#    #+#             */
-/*   Updated: 2023/07/09 19:26:27 by tspoof           ###   ########.fr       */
+/*   Updated: 2023/07/11 05:22:05 by tspoof           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,8 @@ static int check_eaten(t_philo *philos)
 	int	i;
 	int	philos_full;
 
+	if (philos[0].attr->times_must_eat == -1)
+		return (0);
 	i = 0;
 	philos_full = 0;
 	while (i < philos[0].attr->philo_num)
