@@ -4,7 +4,7 @@ Run `make` to build.
 Then `./philo number_of_philosophers time_to_die time_to_eat time_to_sleep [number_of_times_each_philosopher_must_eat]`
 eg. `./philo 15 310 100 200 20`
 
-We pair coded ~80% of this project with [RushMaverick](https://github.com/RushMaverick), [Nick van den Dungen](https://github.com/Nicktvdd) [Kimpozer](https://github.com/composerjunhee) and  using VS code Live Share.
+We pair coded ~80% of this project with [RushMaverick](https://github.com/RushMaverick), [Nick van den Dungen](https://github.com/Nicktvdd) and [Kimpozer](https://github.com/composerjunhee) using VS code Live Share.
 
 **Error codes**
 - 1 args wrong
