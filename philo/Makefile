@@ -1,36 +1,38 @@
-NAME = philo
+NAME 		= philo
 
-SRC_DIR = ./src
-VPATH = src:inc
+S			= src/
+O			= obj/
 
-OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:.c=.o))
-OBJ_DIR = obj
+OBJ			= $(SRC:$S%=$O%.o)
 
 INCLUDES = -Iinc
 CFLAGS = -Wall -Wextra -Werror -MMD -O3 -pthread #-fsanitize=thread -static-libsan
 
 SRC = \
-main.c			mutex.c			errors.c			utils.c			philo.c		\
-governor.c		philo_actions.c	philo_utils.c		attr.c			printing.c
-
-DEP = $(OBJ:.o=.d)
+$S/main.c		$S/mutex.c			$S/errors.c			$S/utils.c		$S/philo.c		\
+$S/governor.c	$S/philo_actions.c	$S/philo_utils.c	$S/attr.c		$S/printing.c
 
 ####
+
+.PHONY: all clean fclean re
+
 all: $(NAME)
 
 $(NAME): $(OBJ)
 	cc $(CFLAGS) $(OBJ) -o $(NAME)
 
-$(OBJ_DIR)/%.o: %.c
-	mkdir -p $(OBJ_DIR)
+$O:
+	@mkdir $@
+
+$(OBJ): | $O
+
+$(OBJ): $O%.o: $S%
 	cc $(CFLAGS) $(INCLUDES) -c $< -o $@
 
--include $(DEP)
-
 clean:
-	rm -rf $(OBJ_DIR)
+	rm -rf $O
 
 fclean: clean
-	rm -rf $(OBJ_DIR)
 	rm -f $(NAME)
+
 re: fclean all
