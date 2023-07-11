@@ -3,7 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   attr.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
+<<<<<<< HEAD:philo/src/attr.c
 /*   By: tspoof <tspoof@student.hive.fi>            +#+  +:+       +#+        */
+=======
+/*   By: junheepoofi <junheepoofi@student.hive.fi>        +#+  +:+
+	+#+        */
+>>>>>>> b4a66243474a5c4c6c3d6bd0f0215d7fe83346f3:src/main.c
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/09 15:08:08 by tspoof            #+#    #+#             */
 /*   Updated: 2023/07/09 15:08:32 by tspoof           ###   ########.fr       */
