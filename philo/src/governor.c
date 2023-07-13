@@ -6,7 +6,7 @@
 /*   By: tspoof <tspoof@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 15:51:33 by rrask             #+#    #+#             */
-/*   Updated: 2023/07/11 14:42:17 by tspoof           ###   ########.fr       */
+/*   Updated: 2023/07/13 20:43:06 by tspoof           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,10 +68,7 @@ static int	check_eaten(t_philo *philos)
 	{
 		pthread_mutex_lock(philos[i].death);
 		if (philos[i].times_eaten >= philos[0].attr->times_must_eat)
-		{
 			philos_full++;
-			pthread_mutex_unlock(philos[i].death);
-		}
 		pthread_mutex_unlock(philos[i].death);
 		i++;
 	}
